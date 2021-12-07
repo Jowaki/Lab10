@@ -1,0 +1,35 @@
+<html>
+<head>Delete Posts Page</head>
+<body>
+    <form action="DeletePost.php" method="post">
+        <?php
+        $mysqli =new mysqli("mysql.eecs.ku.edu", "j009m525", "Udoo3ni7", "j009m525");
+        if ($mysqli->connect_errno) {
+            printf("Connect failed: %s\n", $mysqli->connect_error);
+            exit();
+        }
+        $query="SELECT * FROM Posts";
+        if($result = $mysqli->query($query))
+        {
+        echo "<table>";
+        echo "<tr>";
+            echo "<th>Content&nbsp&nbsp</th>";
+            echo "<th>Author_ID&nbsp </th>";
+            echo "<th>Delete? </th>";
+            echo "</tr>";
+        while($row=$result->fetch_assoc())
+        {
+        $post_id = $row['post_id'];
+        echo "<tr>";
+        echo "<td>".$row["content"]."</td><td>".$row['author_id']."</td><td>
+        <input type='checkbox' name='select[]' value='".$post_id."'></td>";
+        echo "</tr>";
+        }
+        echo "</table>";
+        }
+        $mysqli->close();
+        ?>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
